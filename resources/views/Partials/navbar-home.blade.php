@@ -15,9 +15,7 @@
       <a href="{{ route('home') }}#regulasi" class="nav-link">Regulasi</a>
 
       <a href="{{ route('home.pbj') }}"
-         class="nav-link {{ request()->routeIs('home.pbj') ? 'active' : '' }}">
-        Arsip PBJ
-      </a>
+         class="nav-link {{ request()->routeIs('home.pbj') ? 'active' : '' }}">Arsip PBJ</a>
 
       <a href="{{ route('home') }}#kontak" class="nav-link">Kontak</a>
 

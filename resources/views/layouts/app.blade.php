@@ -24,66 +24,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  {{-- ✅ NAV ACTIVE + SMOOTH (LANDING) --}}
-  <script>
+ {{-- ✅ NAV ACTIVE + SMOOTH (LANDING) --}}
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const links = Array.from(document.querySelectorAll('.nav-links a.nav-link'));
   if (!links.length) return;
 
-  // ✅ ambil SEMUA elemen yang punya id (section/footer/div dll)
+  // ✅ target section yang dipakai di navbar
   const targets = Array.from(document.querySelectorAll('[id]'))
-    .filter(el => ['regulasi','kontak','statistika','arsip'].includes(el.id)); 
-  // kamu bisa tambah id lain kalau mau
-
-  const setActiveById = (id) => {
-    links.forEach(a => a.classList.remove('active'));
-    const match = links.find(a => (a.getAttribute('href') || '').includes('#' + id));
-    if (match) match.classList.add('active');
-  };
-
-  const getCurrent = () => {
-    const offset = 140; // tinggi navbar kamu (120) + sedikit buffer
-    let current = null;
-
-    targets.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top - offset <= 0) current = el.id;
-    });
-
-    return current;
-  };
-
-  const onScroll = () => {
-    const current = getCurrent();
-    if (current) setActiveById(current);
-  };
-
-  // klik -> responsif langsung aktif
-  links.forEach(a => {
-    a.addEventListener('click', () => {
-      const href = a.getAttribute('href') || '';
-      const hashIndex = href.indexOf('#');
-      if (hashIndex !== -1) {
-        const id = href.substring(hashIndex + 1);
-        if (id) setActiveById(id);
-      }
-    });
-  });
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('hashchange', onScroll);
-
-  onScroll();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const links = Array.from(document.querySelectorAll('.nav-links a.nav-link'));
-  if (!links.length) return;
-
-  const targets = [
-    document.getElementById('regulasi'),
-    document.getElementById('kontak'),
-  ].filter(Boolean);
+    .filter(el => ['regulasi','kontak','statistika','arsip'].includes(el.id));
 
   const setActiveById = (id) => {
     links.forEach(a => a.classList.remove('active'));
@@ -104,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const onScroll = () => {
-    // ✅ FIX PALING PENTING (INI "CARA 2"-NYA)
+    // ✅ kalau mentok bawah, paksa kontak aktif
     const nearBottom =
       window.innerHeight + window.scrollY >= document.body.scrollHeight - 20;
 
@@ -117,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (current) setActiveById(current);
   };
 
+  // klik -> langsung aktif
   links.forEach(a => {
     a.addEventListener('click', () => {
       const href = a.getAttribute('href') || '';

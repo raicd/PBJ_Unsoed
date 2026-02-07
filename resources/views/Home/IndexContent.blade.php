@@ -14,7 +14,7 @@
           pengadaan barang dan jasa di lingkungan Universitas Jenderal Soedirman.
         </p>
 
-        <a class="btn btn-primary" href="#arsip">Lihat Arsip</a>
+        <a class="btn btn-primary" href="#arsip">Lihat Arsip Terbaru</a>
       </div>
 
       <div class="hero-illustration">
@@ -24,7 +24,6 @@
           class="hero-img"
         >
       </div>
-    </div>
   </div>
 </section>
 

@@ -6,6 +6,7 @@
 <section class="pbj-page">
   <div class="container">
 
+    {{-- ✅ bedanya HOME: balik ke home --}}
     <a class="detail-back" href="{{ route('home') }}">
       <i class="bi bi-chevron-left"></i> Kembali
     </a>
@@ -19,34 +20,34 @@
 
       <select class="pbj-select">
         <option selected>Semua Unit</option>
-          <option>Fakultas Pertanian</option>
-          <option>Fakultas Biologi</option>
-          <option>Fakultas Ekonomi dan Bisnis</option>
-          <option>Fakultas Peternakan</option>
-          <option>Fakultas Hukum</option>
-          <option>Fakultas Ilmu Sosial dan Ilmu Politik</option>
-          <option>Fakultas Kedokteran</option>
-          <option>Fakultas Teknik</option>
-          <option>Fakultas Ilmu-Ilmu Kesehatan</option>
-          <option>Fakultas Ilmu Budaya</option>
-          <option>Fakultas Matematika dan Ilmu Pengetahuan Alam</option>
-          <option>Fakultas Perikanan dan Ilmu Kelautan</option>
-          <option>Pascasarjana</option>
-          <option>LPPM</option>
-          <option>LPMPP</option>
-          <option>Biro Akademik dan Kemahasiswaan</option>
-          <option>Biro Perencanaan, Kerjasama, dan Humas</option>
-          <option>Biro Keuangan dan Umum</option>
-          <option>Badan Pengelola Usaha</option>
-          <option>RSGMP</option>
-          <option>Satuan Pengawasan Internal</option>
-          <option>UPA Perpustakaan</option>
-          <option>UPA Bahasa</option>
-          <option>UPA Layanan Laboratorium Terpadu</option>
-          <option>UPA Layanan Uji Kompetensi</option>
-          <option>UPA Pengembangan Karir dan Kewirausahaan</option>
-          <option>UPA TIK</option>
-        </select>
+        <option>Fakultas Pertanian</option>
+        <option>Fakultas Biologi</option>
+        <option>Fakultas Ekonomi dan Bisnis</option>
+        <option>Fakultas Peternakan</option>
+        <option>Fakultas Hukum</option>
+        <option>Fakultas Ilmu Sosial dan Ilmu Politik</option>
+        <option>Fakultas Kedokteran</option>
+        <option>Fakultas Teknik</option>
+        <option>Fakultas Ilmu-Ilmu Kesehatan</option>
+        <option>Fakultas Ilmu Budaya</option>
+        <option>Fakultas Matematika dan Ilmu Pengetahuan Alam</option>
+        <option>Fakultas Perikanan dan Ilmu Kelautan</option>
+        <option>Pascasarjana</option>
+        <option>LPPM</option>
+        <option>LPMPP</option>
+        <option>Biro Akademik dan Kemahasiswaan</option>
+        <option>Biro Perencanaan, Kerjasama, dan Humas</option>
+        <option>Biro Keuangan dan Umum</option>
+        <option>Badan Pengelola Usaha</option>
+        <option>RSGMP</option>
+        <option>Satuan Pengawasan Internal</option>
+        <option>UPA Perpustakaan</option>
+        <option>UPA Bahasa</option>
+        <option>UPA Layanan Laboratorium Terpadu</option>
+        <option>UPA Layanan Uji Kompetensi</option>
+        <option>UPA Pengembangan Karir dan Kewirausahaan</option>
+        <option>UPA TIK</option>
+      </select>
 
       <select class="pbj-select">
         <option>Semua Status</option>
@@ -82,7 +83,6 @@
           'arsip'=>'Publik',
           'status'=>'Perencanaan',
 
-          // data modal (biar persis lihat detail)
           'tahun_anggaran'=>2026,
           'id_rup'=>'RUP-2-26-001-FT',
           'status_pekerjaan'=>'Selesai',
@@ -116,7 +116,7 @@
           'unit'=>'LPMPP',
           'nama'=>'Pengadaan Laboratorium Komputer Terpadu',
           'judul'=>'Pengadaan Jasa Konsultan Pengembangan Sistem',
-          'rup'=>'RUP-2026-003-FAPET',
+          'rup'=>'RUP-2026-003-LPMPP',
           'nilai'=>'Rp. 100.866.549.000,00',
           'arsip'=>'Publik',
           'status'=>'Pelaksanaan',
@@ -170,17 +170,14 @@
             <th>Tahun</th>
             <th>Unit Kerja</th>
             <th>Nama Pekerjaan</th>
-             <th>
+            <th>
               <span class="pbj-th-sort">
-              Nilai Kontrak
-              <button type="button"
-              class="pbj-sort-btn"
-              id="sortNilaiBtn"
-              title="Urutkan Nilai Kontrak">
-        <i class="bi bi-arrow-down-up" id="sortNilaiIcon"></i>
-      </button>
-    </span>
-  </th>
+                Nilai Kontrak
+                <button type="button" class="pbj-sort-btn" id="sortNilaiBtn" title="Urutkan Nilai Kontrak">
+                  <i class="bi bi-arrow-down-up" id="sortNilaiIcon"></i>
+                </button>
+              </span>
+            </th>
             <th>Status Arsip</th>
             <th>Status Pekerjaan</th>
             <th class="pbj-col-action">Aksi</th>
@@ -215,18 +212,16 @@
               </td>
 
               <td class="pbj-col-action">
-               <button type="button" class="pbj-link pbj-detail-btn"
-                  onclick='openPbjDetail(@json($r))'>
+                <button type="button" class="pbj-link pbj-detail-btn" onclick='openPbjDetail(@json($r))'>
                   Detail
                 </button>
               </td>
-
             </tr>
           @endforeach
         </tbody>
       </table>
 
-      {{-- PAGINATION BAWAH (persis gambar 2) --}}
+      {{-- PAGINATION BAWAH --}}
       <div class="pbj-foot">
         <div class="pbj-foot-left" id="pbjFootText">
           Halaman 1 dari 1 • Menampilkan {{ count($rows) }} dari {{ count($rows) }} data
@@ -247,9 +242,7 @@
   </div>
 </section>
 
-{{-- =========================
-     MODAL DETAIL (PERSIS LIHAT DETAIL)
-========================= --}}
+{{-- MODAL DETAIL --}}
 <div class="pbj-modal-overlay" id="pbjModal" aria-hidden="true">
   <div class="pbj-modal">
     <div class="pbj-modal-head">
@@ -332,124 +325,34 @@
 
       <div class="pbj-section-title">Dokumen Pengadaan</div>
       <div class="pbj-docs-grid">
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
+        @for($i=0; $i<12; $i++)
+          <div class="pbj-doc-card">
+            <div class="pbj-doc-left">
+              <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
+              <div class="pbj-doc-name">Dokumen RUP</div>
+            </div>
+            <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
           </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
-        <div class="pbj-doc-card">
-          <div class="pbj-doc-left">
-            <div class="pbj-doc-ic"><i class="bi bi-file-earmark"></i></div>
-            <div class="pbj-doc-name">Dokumen RUP</div>
-          </div>
-          <a href="#" class="pbj-doc-btn"><i class="bi bi-eye"></i> Lihat Dokumen</a>
-        </div>
-
+        @endfor
       </div>
     </div>
   </div>
 </div>
+@endsection
 
+@push('scripts')
 <script>
-// =========================
 // SORT NILAI KONTRAK
-// =========================
 document.addEventListener('DOMContentLoaded', () => {
   const btn   = document.getElementById('sortNilaiBtn');
   const icon  = document.getElementById('sortNilaiIcon');
   const tbody = document.querySelector('.pbj-table tbody');
-
   if (!btn || !icon || !tbody) return;
 
-  let direction = 'desc'; // default: tertinggi dulu
+  let direction = 'desc';
 
   function parseRupiah(text){
-    return parseInt(
-      text.replace(/[^\d]/g, '')
-    ) || 0;
+    return parseInt(text.replace(/[^\d]/g, '')) || 0;
   }
 
   btn.addEventListener('click', () => {
@@ -463,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rows.forEach(row => tbody.appendChild(row));
 
-    // toggle arah
     if(direction === 'desc'){
       direction = 'asc';
       icon.className = 'bi bi-sort-up';
@@ -474,42 +376,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-  function openPbjDetail(d){
-    const modal = document.getElementById('pbjModal');
-    modal.classList.add('show');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+function openPbjDetail(d){
+  const modal = document.getElementById('pbjModal');
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
 
-    document.getElementById('pbjM_judul').innerText = d.judul || d.nama || 'Detail Arsip';
-    document.getElementById('pbjM_unit').innerText  = d.unit || '-';
-    document.getElementById('pbjM_tahun').innerText = d.tahun_anggaran || d.tahun || '-';
-    document.getElementById('pbjM_rup').innerText   = d.id_rup || d.rup || '-';
-    document.getElementById('pbjM_status').innerText= d.status_pekerjaan || d.status || '-';
-    document.getElementById('pbjM_rekanan').innerText = d.rekanan || '-';
-    document.getElementById('pbjM_jenis').innerText = d.jenis_pengadaan || 'Tender';
-    document.getElementById('pbjM_pagu').innerText  = d.pagu || '-';
-    document.getElementById('pbjM_hps').innerText   = d.hps || '-';
-    document.getElementById('pbjM_nilai').innerText = d.nilai_kontrak || d.nilai || '-';
+  document.getElementById('pbjM_judul').innerText = d.judul || d.nama || 'Detail Arsip';
+  document.getElementById('pbjM_unit').innerText  = d.unit || '-';
+  document.getElementById('pbjM_tahun').innerText = d.tahun_anggaran || d.tahun || '-';
+  document.getElementById('pbjM_rup').innerText   = d.id_rup || d.rup || '-';
+  document.getElementById('pbjM_status').innerText= d.status_pekerjaan || d.status || '-';
+  document.getElementById('pbjM_rekanan').innerText = d.rekanan || '-';
+  document.getElementById('pbjM_jenis').innerText = d.jenis_pengadaan || 'Tender';
+  document.getElementById('pbjM_pagu').innerText  = d.pagu || '-';
+  document.getElementById('pbjM_hps').innerText   = d.hps || '-';
+  document.getElementById('pbjM_nilai').innerText = d.nilai_kontrak || d.nilai || '-';
+}
+
+function closePbjDetail(){
+  const modal = document.getElementById('pbjModal');
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function(e){
+  const overlay = document.getElementById('pbjModal');
+  if(!overlay) return;
+  if(overlay.classList.contains('show') && e.target === overlay){
+    closePbjDetail();
   }
+});
 
-  function closePbjDetail(){
-    const modal = document.getElementById('pbjModal');
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  document.addEventListener('click', function(e){
-    const overlay = document.getElementById('pbjModal');
-    if(!overlay) return;
-    if(overlay.classList.contains('show') && e.target === overlay){
-      closePbjDetail();
-    }
-  });
-
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closePbjDetail();
-  });
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closePbjDetail();
+});
 </script>
-
-@endsection
+@endpush
