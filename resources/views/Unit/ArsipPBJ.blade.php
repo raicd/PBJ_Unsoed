@@ -262,8 +262,13 @@
 
         {{-- ✅ Metode PBJ dihapus dari preview --}}
 
-        {{-- Nilai Kontrak = center --}}
-        <div class="ap-col-center">Nilai Kontrak</div>
+        {{-- ✅ Nilai Kontrak = center + sort --}}
+        <div class="ap-col-center ap-nilai-sort">
+          <span>Nilai Kontrak</span>
+          <button type="button" id="sortNilaiBtn" class="ap-sort-btn" title="Urutkan Nilai Kontrak" aria-label="Urutkan Nilai Kontrak">
+            <i id="sortNilaiIcon" class="bi bi-sort-down-alt"></i>
+          </button>
+        </div>
 
         {{-- Status Arsip = center --}}
         <div class="ap-col-center">Status Arsip</div>
@@ -747,6 +752,37 @@
     justify-self:center !important;
   }
 
+  /* ✅ SORT NILAI KONTRAK (hapus background button) */
+  .page-arsip .ap-nilai-sort{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+  }
+  .page-arsip .ap-sort-btn{
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition: .15s ease;
+    padding: 0;
+    line-height: 1;
+  }
+  .page-arsip .ap-sort-btn:hover{
+    background: transparent;
+  }
+  .page-arsip .ap-sort-btn i{
+    font-size: 20px;         /* ✅ agak besar */
+    color: #fff !important;  /* ✅ icon putih */
+    line-height: 1;
+    display:block;
+  }
+
   /* status arsip center */
   .page-arsip .ap-arsip-center{
     display:flex;
@@ -1144,6 +1180,52 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.setAttribute('aria-hidden', 'true');
       }
       window.print();
+    });
+  }
+
+  // =========================
+  // ✅ SORT NILAI KONTRAK (seperti PPK)
+  // =========================
+  const btn   = document.getElementById('sortNilaiBtn');
+  const icon  = document.getElementById('sortNilaiIcon');
+  const table = document.querySelector('.ap-table');
+
+  if (btn && icon && table) {
+    let direction = 'desc'; // default: tertinggi dulu
+
+    function parseRupiah(text){
+      return parseInt((text || '').replace(/[^\d]/g, '')) || 0;
+    }
+
+    btn.addEventListener('click', () => {
+      const rows = Array.from(table.querySelectorAll('.ap-row'));
+      const pagination = table.querySelector('.ap-pagination-wrap'); // biar pagination tetap di bawah
+
+      rows.sort((a, b) => {
+        const aMoneyEl = a.querySelector('.ap-money');
+        const bMoneyEl = b.querySelector('.ap-money');
+        const aVal = parseRupiah(aMoneyEl ? aMoneyEl.innerText : '');
+        const bVal = parseRupiah(bMoneyEl ? bMoneyEl.innerText : '');
+        return direction === 'desc' ? bVal - aVal : aVal - bVal;
+      });
+
+      rows.forEach(row => {
+        if (pagination) table.insertBefore(row, pagination);
+        else table.appendChild(row);
+      });
+
+      // toggle arah + icon
+      if(direction === 'desc'){
+        direction = 'asc';
+        icon.className = 'bi bi-sort-up';
+      }else{
+        direction = 'desc';
+        icon.className = 'bi bi-sort-down-alt';
+      }
+
+      syncSelectAllState();
+      updateEditState();
+      updateDeleteState();
     });
   }
 

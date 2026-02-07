@@ -9,8 +9,8 @@
     <nav class="nav-links">
       <a href="{{ route('landing') }}#regulasi" class="nav-link">Regulasi</a>
 
-      <a href="{{ route('ArsipPBJ') }}"
-         class="nav-link {{ request()->routeIs('ArsipPBJ') ? 'active' : '' }}">
+      <a href="{{ auth()->check() ? route('home') : route('login') }}"
+         class="nav-link {{ request()->routeIs('home') || request()->routeIs('ppk.arsip') || request()->routeIs('unit.arsip') ? 'active' : '' }}">
         Arsip PBJ
       </a>
 

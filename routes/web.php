@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 // Controllers
 use App\Http\Controllers\Unit\UnitController;
@@ -14,106 +15,150 @@ use App\Http\Controllers\PPK\PpkController;
  */
 Route::view('/', 'Landing.Index')->name('landing');
 
-// samakan penamaan view login (pilih salah satu yang bener di projectmu)
-Route::view('/login', 'Auth.login')->name('login'); // kalau file: resources/views/Auth/Login.blade.php
-
 /**
  * =========================
- * HOMEPAGE
+ * LOGIN (GET + POST)
  * =========================
  */
-Route::view('/home', 'Home.index')->name('home');
-Route::view('/home-preview', 'Home.index')->name('home.preview');
+Route::middleware('guest')->group(function () {
+
+    // halaman login
+    Route::view('/login', 'Auth.login')->name('login');
+
+    // proses login (✅ FIX: pakai email + password)
+    Route::post('/login', function (Request $request) {
+
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        $remember = $request->boolean('remember'); // checkbox "ingat kata sandi" (kalau ada)
+
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ], $remember)) {
+
+            $request->session()->regenerate();
+
+            // masuk lewat gerbang smart redirect
+            return redirect()->intended(route('home'));
+        }
+
+        // kalau gagal login, balik ke form + param error (biar UI kamu tetap sama)
+        return redirect()
+            ->route('login', ['error' => 1])
+            ->with('error', 'Username atau Password Salah!')
+            ->withInput($request->only('email'));
+    })->name('login.post');
+
+});
 
 /**
  * =========================
- * PBJ (Publik & Home)
+ * AFTER LOGIN REDIRECT (SMART)
  * =========================
- * Landing: /ArsipPBJ       -> name: ArsipPBJ
- * Home   : /home/ArsipPBJ  -> name: home.pbj
+ * /home jadi gerbang:
+ * - role ppk  -> ppk.dashboard
+ * - role unit -> unit.dashboard
  */
-Route::view('/ArsipPBJ', 'Landing.pbj')->name('ArsipPBJ');
-Route::view('/home/ArsipPBJ', 'Home.pbj')->name('home.pbj');
+Route::get('/home', function () {
+    $user = Auth::user();
 
-// Alias (biar link lama gak error)
-Route::redirect('/home/arsippbj', '/home/ArsipPBJ')->name('home.arsippbj');
-Route::redirect('/home/arsip-pbj', '/home/ArsipPBJ');
+    // kalau belum login, balik ke login
+    if (!$user) return redirect()->route('login');
+
+    // sesuaikan nama kolom role di user kamu
+    if ($user->role === 'ppk') {
+        return redirect()->route('ppk.dashboard');
+    }
+
+    if ($user->role === 'unit') {
+        return redirect()->route('unit.dashboard');
+    }
+
+    // fallback kalau role tidak dikenali
+    Auth::logout();
+    return redirect()->route('login')->with('error', 'Role tidak dikenali.');
+})->middleware('auth')->name('home');
 
 /**
- * =========================
- * DETAIL PUBLIK (Arsip)
- * =========================
- */
-Route::get('/arsip/{id}', function ($id) {
-    return view('Landing.LihatDetail', compact('id'));
-})->name('arsip.detail');
-
-/**
- * Default redirect setelah login
+ * Default redirect setelah login (opsional)
+ * kalau kamu pakai redirect ke /dashboard setelah login
  */
 Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->middleware('auth')->name('dashboard');
 
 /**
- * Logout
+ * =========================
+ * LOGOUT
+ * =========================
  */
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     return redirect()->route('landing');
-})->name('logout');
+})->middleware('auth')->name('logout');
 
 
 /*
 |--------------------------------------------------------------------------
-| UNIT ROUTES (AUTH)
+| PUBLIC DETAIL (kalau perlu)
 |--------------------------------------------------------------------------
 */
+Route::get('/arsip/{id}', function ($id) {
+    return view('Landing.LihatDetail', compact('id'));
+})->name('arsip.detail');
+
+
+/*
+|--------------------------------------------------------------------------
+| UNIT ROUTES
+|--------------------------------------------------------------------------
+| Dashboard Unit: /unit/dashboard
+*/
 Route::prefix('unit')
-    ->middleware('auth')
+    ->middleware(['auth', 'role:unit'])   // ✅ penting
     ->name('unit.')
     ->group(function () {
 
-        // Dashboard
+        // Dashboard Unit (jadi homepage setelah login)
         Route::get('/dashboard', [UnitController::class, 'dashboard'])->name('dashboard');
 
-        // ====== ARSIP PBJ ======
+        // Arsip PBJ
         Route::get('/arsip', [UnitController::class, 'arsipIndex'])->name('arsip');
-
         Route::get('/arsip/{id}/edit', [UnitController::class, 'arsipEdit'])->name('arsip.edit');
-
         Route::put('/arsip/{id}', [UnitController::class, 'arsipUpdate'])->name('arsip.update');
 
-        // ====== TAMBAH PENGADAAN ======
+        // Tambah Pengadaan
         Route::get('/pengadaan/tambah', [UnitController::class, 'pengadaanCreate'])->name('pengadaan.create');
-
         Route::post('/pengadaan/store', [UnitController::class, 'pengadaanStore'])->name('pengadaan.store');
     });
 
+
 /*
 |--------------------------------------------------------------------------
-| PPK ROUTES (AUTH)
+| PPK ROUTES
 |--------------------------------------------------------------------------
+| Dashboard PPK: /ppk/dashboard
 */
 Route::prefix('ppk')
-    ->middleware('auth')
+    ->middleware(['auth', 'role:ppk'])    // ✅ penting
     ->name('ppk.')
     ->group(function () {
 
-        // Dashboard
+        // Dashboard PPK (jadi homepage setelah login)
         Route::get('/dashboard', [PpkController::class, 'dashboard'])->name('dashboard');
 
-        // ====== ARSIP PBJ ======
+        // Arsip PBJ
         Route::get('/arsip', [PpkController::class, 'arsipIndex'])->name('arsip');
-
         Route::get('/arsip/{id}/edit', [PpkController::class, 'arsipEdit'])->name('arsip.edit');
-
         Route::put('/arsip/{id}', [PpkController::class, 'arsipUpdate'])->name('arsip.update');
 
-        // ====== TAMBAH PENGADAAN ======
+        // Tambah Pengadaan
         Route::get('/pengadaan/tambah', [PpkController::class, 'pengadaanCreate'])->name('pengadaan.create');
-
         Route::post('/pengadaan/store', [PpkController::class, 'pengadaanStore'])->name('pengadaan.store');
     });

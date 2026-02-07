@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 {{-- resources/views/PPK/Dashboard.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
@@ -31,6 +30,37 @@
     ["label"=>"Arsip Private", "value"=>2, "accent"=>"gray", "icon"=>"bi-eye-slash"],
     ["label"=>"Total Paket Pengadaan", "value"=>7, "accent"=>"navy", "icon"=>"bi-file-earmark-text", "sub"=>"Paket Pengadaan Barang dan Jasa"],
     ["label"=>"Total Nilai Pengadaan", "value"=>"Rp 1.200.000.000", "accent"=>"yellow", "icon"=>"bi-buildings", "sub"=>"Nilai Kontrak Pengadaan"],
+  ];
+
+  // ✅ card informasi Total Unit Kerja
+  $totalUnitKerja = 24; // dummy (nanti backend tinggal ganti)
+
+  // ✅ list unit kerja terdaftar (dummy)
+  $registeredUnits = [
+    "Rektorat",
+    "LPPM",
+    "SPI",
+    "UPT TIK",
+    "UPT Perpustakaan",
+    "Fakultas Teknik",
+    "Fakultas Hukum",
+    "Fakultas Ekonomi dan Bisnis",
+    "Fakultas Pertanian",
+    "Fakultas Ilmu Sosial dan Ilmu Politik",
+    "Fakultas Biologi",
+    "Fakultas Matematika dan Ilmu Pengetahuan Alam",
+    "Fakultas Ilmu Kesehatan",
+    "Fakultas Kedokteran",
+    "Fakultas Peternakan",
+    "Fakultas Perikanan dan Ilmu Kelautan",
+    "UPT Bahasa",
+    "UPT Laboratorium Terpadu",
+    "UPT Kewirausahaan",
+    "UPT Olahraga",
+    "UPT Asrama",
+    "Unit Pengadaan",
+    "Biro Akademik",
+    "Biro Umum",
   ];
 
   // opsi filter (dummy)
@@ -90,60 +120,6 @@
         <i class="bi bi-house-door"></i> Kembali
       </a>
       <a class="dash-side-btn" href="{{ url('/logout') }}">
-=======
-@extends('layouts.ppk')
-
-@section('title', 'Dashboard PPK')
-
-@php
-$unitKerja = [
-  'Fakultas Pertanian','Fakultas Biologi','Fakultas Ekonomi dan Bisnis','Fakultas Peternakan',
-  'Fakultas Hukum','Fakultas Ilmu Sosial dan Ilmu Politik','Fakultas Kedokteran','Fakultas Teknik',
-  'Fakultas Ilmu-Ilmu Kesehatan','Fakultas Ilmu Budaya','Fakultas Matematika dan Ilmu Pengetahuan Alam',
-  'Fakultas Perikanan dan Ilmu Kelautan','Pascasarjana',
-  'Lembaga Penelitian dan Pengabdian Kepada Masyarakat (LPPM)',
-  'Lembaga Penjaminan Mutu dan Pengembangan Pembelajaran (LPMPP)',
-  'Biro Akademik dan Kemahasiswaan','Biro Perencanaan, Kerjasama, dan Hubungan Masyarakat',
-  'Biro Keuangan dan Umum','Badan Pengelola Usaha','Rumah Sakit Gigi dan Mulut (RSGMP)',
-  'Satuan Pengawasan Internal','UPA Perpustakaan','UPA Bahasa','UPA Layanan Laboratorium Terpadu',
-  'UPA Layanan Uji Kompetensi','UPA Pengembangan Karir dan Kewirausahaan','UPA Teknologi Informasi dan Komunikasi'
-];
-@endphp
-
-@section('content')
-<div class="dash">
-
-  {{-- SIDEBAR --}}
-  <aside class="dash-side">
-    <div class="dash-brand">
-      <div class="dash-logo">
-        <img src="{{ asset('Logo_Unsoed.png') }}" alt="Logo Unsoed">
-      </div>
-      <div>
-        <div class="dash-app">SIAPABAJA</div>
-        <div class="dash-role">Admin (PPK)</div>
-      </div>
-    </div>
-
-    <nav class="dash-menu">
-      <a href="#" class="dash-link active">
-        <i class="bi bi-grid"></i> Dashboard
-      </a>
-      <a href="#" class="dash-link">
-        <i class="bi bi-archive"></i> Arsip PBJ
-      </a>
-      <a href="#" class="dash-link">
-        <i class="bi bi-plus-circle"></i> Tambah Pengadaan
-      </a>
-    </nav>
-
-    {{-- MENU BAWAH (persis kaya gambar) --}}
-    <div class="dash-side-bottom">
-      <a href="{{ url('/') }}" class="dash-link">
-        <i class="bi bi-house"></i> Kembali
-      </a>
-      <a href="{{ url('/logout') }}" class="dash-link">
->>>>>>> Stashed changes
         <i class="bi bi-box-arrow-right"></i> Keluar
       </a>
     </div>
@@ -151,18 +127,17 @@ $unitKerja = [
 
   {{-- MAIN --}}
   <main class="dash-main">
-<<<<<<< Updated upstream
     <header class="dash-header">
       {{-- ✅ semi-bold hanya judul page --}}
       <h1>Dashboard Admin PPK</h1>
       <p>Kelola arsip pengadaan barang dan jasa Universitas Jenderal Soedirman</p>
     </header>
 
-    {{-- SUMMARY CARDS (layout sesuai gambar: 3 atas, lalu 2 bawah) --}}
+    {{-- SUMMARY CARDS --}}
     <section class="u-sum">
-      {{-- row 1 (3 card) --}}
-      <div class="u-sum-row u-sum-row--3">
-        {{-- 1 --}}
+      {{-- row 1 (4 card) --}}
+      <div class="u-sum-row u-sum-row--4">
+        {{-- 1: Total Arsip --}}
         <div class="u-card">
           <div class="u-bar u-bar--navy"></div>
           <div class="u-top">
@@ -174,7 +149,26 @@ $unitKerja = [
           </div>
         </div>
 
-        {{-- 2 --}}
+        {{-- ✅ Total Unit Kerja + tombol detail (fullscreen modal) --}}
+        <div class="u-card u-card--unit">
+          <div class="u-bar u-bar--navy"></div>
+
+          <div class="u-top">
+            <div>
+              <div class="u-label">Total Unit Kerja</div>
+              <div class="u-value u-value--navy">{{ $totalUnitKerja }}</div>
+              <div class="u-sub">Unit kerja terdaftar</div>
+            </div>
+            <div class="u-ic"><i class="bi bi-diagram-3"></i></div>
+          </div>
+
+          {{-- ✅ tombol detail pindah ke bawah kanan --}}
+          <button class="u-info-btn u-info-btn--card" type="button" data-modal="modalUnit" aria-label="Lihat daftar unit kerja terdaftar">
+            <i class="bi bi-info"></i>
+          </button>
+        </div>
+
+        {{-- 2: Arsip Publik --}}
         <div class="u-card">
           <div class="u-bar u-bar--yellow"></div>
           <div class="u-top">
@@ -186,7 +180,7 @@ $unitKerja = [
           </div>
         </div>
 
-        {{-- 3 --}}
+        {{-- 3: Arsip Private --}}
         <div class="u-card">
           <div class="u-bar u-bar--gray"></div>
           <div class="u-top">
@@ -207,13 +201,12 @@ $unitKerja = [
           <div class="u-top">
             <div>
               <div class="u-label">{{ $summary[3]['label'] }}</div>
-              <div class="u-value u-value--navy">{{ $summary[3]['value'] }}</div>
+              <div class="u-value u-value--navy" id="valPaket">{{ $summary[3]['value'] }}</div>
               <div class="u-sub">{{ $summary[3]['sub'] }}</div>
             </div>
             <div class="u-ic"><i class="bi {{ $summary[3]['icon'] }}"></i></div>
           </div>
 
-          {{-- ✅ FILTER TAHUN (bawah kanan) --}}
           <div class="u-card-filter">
             <div class="u-mini-select">
               <select id="fTahunPaket">
@@ -232,13 +225,12 @@ $unitKerja = [
           <div class="u-top">
             <div>
               <div class="u-label">{{ $summary[4]['label'] }}</div>
-              <div class="u-money">{{ $summary[4]['value'] }}</div>
+              <div class="u-money" id="valNilai">{{ $summary[4]['value'] }}</div>
               <div class="u-sub">{{ $summary[4]['sub'] }}</div>
             </div>
             <div class="u-ic u-ic--yellow"><i class="bi {{ $summary[4]['icon'] }}"></i></div>
           </div>
 
-          {{-- ✅ FILTER TAHUN (bawah kanan) --}}
           <div class="u-card-filter">
             <div class="u-mini-select">
               <select id="fTahunNilai">
@@ -248,166 +240,32 @@ $unitKerja = [
               </select>
               <i class="bi bi-chevron-down"></i>
             </div>
-=======
-
-    <div class="dash-header">
-      <h1>Dashboard Admin (PPK)</h1>
-      <p>Kelola seluruh arsip pengadaan dari semua unit kerja</p>
-    </div>
-
-    {{-- KPI --}}
-    <section class="dash-cards">
-      <div class="kpi kpi-blue">
-        <div>
-          <div class="kpi-label">Total Arsip</div>
-          <div class="kpi-value">7</div>
-        </div>
-        <div class="kpi-ic"><i class="bi bi-file-earmark-text"></i></div>
-      </div>
-
-      <div class="kpi kpi-green">
-        <div>
-          <div class="kpi-label">Arsip Publik</div>
-          <div class="kpi-value">5</div>
-        </div>
-        <div class="kpi-ic"><i class="bi bi-eye"></i></div>
-      </div>
-
-      <div class="kpi kpi-dark">
-        <div>
-          <div class="kpi-label">Arsip Private</div>
-          <div class="kpi-value">2</div>
-        </div>
-        <div class="kpi-ic"><i class="bi bi-eye-slash"></i></div>
-      </div>
-
-      <div class="kpi kpi-yellow">
-        <div>
-          <div class="kpi-label">Total Unit Kerja</div>
-          <div class="kpi-value">{{ count($unitKerja) }}</div>
-        </div>
-        <div class="kpi-ic"><i class="bi bi-buildings"></i></div>
-      </div>
-    </section>
-
-    {{-- PANEL (kiri kecil, kanan lebih lebar) --}}
-    <section class="dash-row">
-      <div class="panel panel-pack">
-        <div class="panel-top">
-          <div>
-            <div class="panel-label">Total Paket Pengadaan</div>
-            <div class="panel-value">7</div>
-            <div class="panel-sub">Paket Pengadaan Barang dan Jasa</div>
-          </div>
-
-          <div class="panel-ic"><i class="bi bi-file-earmark-text"></i></div>
-        </div>
-
-        <div class="panel-filters panel-filters-bottom">
-          <select class="sel">
-            <option>Tahun</option>
-            <option>2024</option>
-            <option>2025</option>
-            <option>2026</option>
-          </select>
-          <select class="sel">
-            <option value="">Semua Unit</option>
-            @foreach($unitKerja as $unit)
-              <option>{{ $unit }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-
-      <div class="panel panel-wide">
-        <div class="panel-top">
-          <div>
-            <div class="panel-label">Total Nilai Pengadaan</div>
-            <div class="panel-money">Rp 1.200.000.000</div>
-            <div class="panel-sub">Nilai Kontrak Pengadaan</div>
-          </div>
-
-          <div class="panel-ic"><i class="bi bi-bank"></i></div>
-        </div>
-      </div>
-    </section>
-
-    {{-- CHART --}}
-    <section class="dash-charts">
-      {{-- DONUT --}}
-      <div class="chart-card">
-        <div class="chart-head">Statistika</div>
-
-        <div class="chart-filters">
-          <select class="sel" id="ppkYearDonut">
-            <option>Tahun</option>
-            <option>2024</option>
-            <option>2025</option>
-            <option selected>2026</option>
-          </select>
-
-          <select class="sel" id="ppkUnitDonut">
-            <option value="">Semua Unit</option>
-            @foreach($unitKerja as $unit)
-              <option>{{ $unit }}</option>
-            @endforeach
-          </select>
-        </div>
-
-        <div class="chart-body">
-          <div class="chart-canvas">
-            <canvas id="ppkDonut"></canvas>
-          </div>
-
-          <div class="chart-legend">
-            <div class="lg"><span class="dot d-blue"></span> Perencanaan</div>
-            <div class="lg"><span class="dot d-dark"></span> Pemilihan</div>
-            <div class="lg"><span class="dot d-yellow"></span> Pelaksanaan</div>
-            <div class="lg"><span class="dot d-sand"></span> Selesai</div>
-          </div>
-        </div>
-      </div>
-
-      {{-- BAR --}}
-      <div class="chart-card">
-        <div class="chart-head">Statistika</div>
-
-        <div class="chart-filters">
-          <select class="sel" id="ppkYearBar">
-            <option>Tahun</option>
-            <option selected>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
-            <option>2025</option>
-            <option>2026</option>
-          </select>
-
-          <select class="sel" id="ppkUnitBar">
-            <option value="">Semua Unit</option>
-            @foreach($unitKerja as $unit)
-              <option>{{ $unit }}</option>
-            @endforeach
-          </select>
-        </div>
-
-        <div class="chart-body bar-only">
-          <div class="chart-canvas chart-canvas--bar">
-            <canvas id="ppkBar"></canvas>
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
     </section>
 
-<<<<<<< Updated upstream
     {{-- STATISTIKA (2 card chart) --}}
     <section class="u-charts">
       {{-- Chart 1: Donut --}}
       <div class="u-chart-card">
-        {{-- ✅ subjudul harus normal --}}
-        <div class="u-chart-title">Status Arsip</div>
+        <div class="u-chart-head">
+          <div class="u-chart-title">Status Arsip</div>
+
+          <button class="u-info-btn" type="button" data-pop="popDonut" aria-label="Lihat detail Status Arsip">
+            <i class="bi bi-info"></i>
+          </button>
+
+          <div id="popDonut" class="u-popover" role="dialog" aria-hidden="true">
+            <div class="u-popover-title">Detail Status Arsip</div>
+            <div class="u-popover-meta">
+              <span id="metaDonut">—</span>
+            </div>
+            <div class="u-popover-list" id="listDonut"></div>
+            <div class="u-popover-foot">Klik di luar untuk menutup</div>
+          </div>
+        </div>
+
         <div class="u-chart-divider"></div>
 
         <div class="u-chart-filters">
@@ -438,7 +296,23 @@ $unitKerja = [
 
       {{-- Chart 2: Bar --}}
       <div class="u-chart-card">
-        <div class="u-chart-title">Metode Pengadaan</div>
+        <div class="u-chart-head">
+          <div class="u-chart-title">Metode Pengadaan</div>
+
+          <button class="u-info-btn" type="button" data-pop="popBar" aria-label="Lihat detail Metode Pengadaan">
+            <i class="bi bi-info"></i>
+          </button>
+
+          <div id="popBar" class="u-popover" role="dialog" aria-hidden="true">
+            <div class="u-popover-title">Detail Metode Pengadaan</div>
+            <div class="u-popover-meta">
+              <span id="metaBar">—</span>
+            </div>
+            <div class="u-popover-list" id="listBar"></div>
+            <div class="u-popover-foot">Klik di luar untuk menutup</div>
+          </div>
+        </div>
+
         <div class="u-chart-divider"></div>
 
         <div class="u-chart-filters">
@@ -470,21 +344,51 @@ $unitKerja = [
   </main>
 </div>
 
+{{-- ✅ MODAL FULLSCREEN --}}
+<div class="u-modal" id="modalUnit" aria-hidden="true" role="dialog" aria-label="Daftar Unit Kerja Terdaftar">
+  <div class="u-modal-backdrop" data-close="modalUnit"></div>
+
+  <div class="u-modal-dialog" role="document">
+    <div class="u-modal-head">
+      <div class="u-modal-title">
+        <div class="t1">Daftar Unit Kerja Terdaftar</div>
+        <div class="t2">Total: {{ count($registeredUnits) }} unit</div>
+      </div>
+
+      {{-- ✅ hanya tombol X --}}
+      <button class="u-modal-close" type="button" data-close="modalUnit" aria-label="Tutup popup">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="u-modal-body">
+      <div class="u-unit-grid">
+        @foreach($registeredUnits as $i => $name)
+          <div class="u-unit-item">
+            <div class="u-unit-badge">{{ $i+1 }}</div>
+            <div class="u-unit-name">{{ $name }}</div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+
+    {{-- ✅ footer tetap ada tapi tanpa tombol --}}
+    <div class="u-modal-foot">
+      <div class="u-modal-hint">Klik area gelap atau tombol X untuk menutup</div>
+    </div>
+  </div>
+</div>
+
 <style>
   /* =============================
      DASHBOARD OVERRIDE (NO BOLD)
-     Aturan:
-     - h1 (judul page) semi-bold
-     - lainnya normal
   ============================= */
-
   .dash-body{
     font-size: 18px;
     line-height: 1.6;
     font-weight: 400;
   }
 
-  /* ✅ FIT 1 LAYAR: tidak bisa scroll page */
   html, body{
     height: 100%;
     overflow: hidden;
@@ -498,11 +402,13 @@ $unitKerja = [
     overflow: hidden;
   }
 
-  /* pastikan judul page saja yang semi-bold */
+  body.is-modal-open{
+    overflow: hidden !important;
+  }
+
   .dash-header h1{ font-weight: 600 !important; }
   .dash-header p{ font-weight: 400 !important; }
 
-  /* matikan bold dari style lama */
   .u-label,
   .u-value,
   .u-money,
@@ -512,7 +418,6 @@ $unitKerja = [
     font-weight: 400 !important;
   }
 
-  /* ✅ tambahan: mini filter tahun di card (bawah kanan) */
   .u-card{ position: relative; }
   .u-card-filter{
     position: absolute;
@@ -543,7 +448,6 @@ $unitKerja = [
     font-size: 12px;
   }
 
-  /* Sidebar tetap (tidak ikut scroll) */
   .dash-sidebar{
     position: sticky;
     top: 0;
@@ -553,10 +457,9 @@ $unitKerja = [
     flex-direction:column;
   }
 
-  /* Summary layout */
   .u-sum{ display:grid; gap: 16px; }
   .u-sum-row{ display:grid; gap: 16px; }
-  .u-sum-row--3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .u-sum-row--4{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .u-sum-row--2{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .u-card{
@@ -624,7 +527,8 @@ $unitKerja = [
   .u-ic--yellow{ color:#c98800; background:#fff6cc; }
   .u-ic--gray{ color:#0f172a; background:#eef2f7; }
 
-  /* Charts */
+  .u-card--unit .u-sub{ margin-top: 6px; }
+
   .u-charts{
     margin-top: 18px;
     display:grid;
@@ -637,14 +541,143 @@ $unitKerja = [
     border-radius: 18px;
     padding: 14px 16px 16px;
     box-shadow: 0 10px 20px rgba(2,8,23,.04);
+    position: relative;
   }
 
-  /* subjudul normal */
+  .u-chart-head{
+    position: relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height: 28px;
+  }
   .u-chart-title{
     text-align:center;
     font-size: 20px;
     color:#0f172a;
     margin-top: 2px;
+  }
+
+  .u-info-btn{
+    position:absolute;
+    right: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 2px solid #184f61;
+    background:#fff;
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    line-height: 1;
+    padding: 0;
+    color:#184f61;
+    box-shadow: 0 10px 20px rgba(2,8,23,.06);
+  }
+  .u-info-btn i{
+    font-size: 14px;
+    opacity: .9;
+    pointer-events:none;
+    -webkit-text-stroke: .4px #184f61;
+  }
+  .u-info-btn:hover{
+    border-color:#143f4d;
+    transform: translateY(-.5px);
+  }
+
+  /* ✅ pindah ke bawah kanan */
+  .u-info-btn--card{
+    position:absolute;
+    right: 12px;
+    bottom: 10px;
+    top: auto;
+  }
+
+  /* popover chart (tetap) */
+  .u-popover{
+    position:absolute;
+    right: 0;
+    top: 30px;
+    width: 380px;
+    background:#fff;
+    border: 1px solid #e6eef2;
+    border-radius: 12px;
+    box-shadow: 0 18px 30px rgba(2,8,23,.12);
+    padding: 10px 10px 8px;
+    z-index: 50;
+    display:none;
+  }
+  .u-popover.is-open{ display:block; }
+  .u-popover::before{
+    content:"";
+    position:absolute;
+    right: 12px;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    background:#fff;
+    border-left: 1px solid #e6eef2;
+    border-top: 1px solid #e6eef2;
+    transform: rotate(45deg);
+  }
+  .u-popover-title{
+    font-size: 14px;
+    color:#0f172a;
+    font-weight: 400 !important;
+    margin-bottom: 4px;
+  }
+  .u-popover-meta{
+    font-size: 12px;
+    color:#64748b;
+    margin-bottom: 8px;
+  }
+  .u-popover-list{
+    display:grid;
+    gap: 6px;
+    max-height: 160px;
+    overflow:auto;
+    padding-right: 2px;
+  }
+  .u-popover-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    border: 1px solid #eef2f7;
+    border-radius: 10px;
+    padding: 8px 8px;
+  }
+  .u-popover-left{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .u-dot{
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background:#184f61;
+    flex: 0 0 auto;
+  }
+  .u-popover-name{
+    font-size: 13px;
+    color:#0f172a;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+  }
+  .u-popover-val{
+    font-size: 13px;
+    color:#0f172a;
+    flex: 0 0 auto;
+  }
+  .u-popover-foot{
+    margin-top: 8px;
+    font-size: 11px;
+    color:#94a3b8;
+    text-align:right;
   }
 
   .u-chart-divider{
@@ -687,7 +720,134 @@ $unitKerja = [
     max-height: 260px !important;
   }
 
-  /* ✅ supaya muat 1 layar (tanpa scroll) */
+  /* =============================
+     ✅ FULLSCREEN MODAL UNIT
+  ============================= */
+  .u-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: none;
+  }
+  .u-modal.is-open{ display:block; }
+
+  .u-modal-backdrop{
+    position: absolute;
+    inset: 0;
+    background: rgba(2,8,23,.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .u-modal-dialog{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(980px, calc(100vw - 44px));
+    height: min(86vh, 720px);
+    background: #fff;
+    border: 1px solid #e6eef2;
+    border-radius: 18px;
+    box-shadow: 0 22px 44px rgba(2,8,23,.18);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .u-modal-head{
+    padding: 14px 16px;
+    border-bottom: 1px solid #e6eef2;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap: 12px;
+  }
+  .u-modal-title .t1{
+    font-size: 18px;
+    color:#0f172a;
+    font-weight: 400 !important;
+  }
+  .u-modal-title .t2{
+    font-size: 13px;
+    color:#64748b;
+    margin-top: 4px;
+  }
+
+  /* ✅ tombol X: icon presisi center */
+  .u-modal-close{
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid #e6eef2;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow: 0 10px 20px rgba(2,8,23,.06);
+    color:#0f172a;
+    padding: 0;
+  }
+  .u-modal-close i{
+    font-size: 16px;
+    line-height: 1;
+    display:block;
+  }
+  .u-modal-close:hover{ transform: translateY(-.5px); }
+
+  .u-modal-body{
+    padding: 14px 16px 16px;
+    overflow: auto;
+  }
+
+  .u-unit-grid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .u-unit-item{
+    border: 1px solid #eef2f7;
+    border-radius: 14px;
+    padding: 12px 12px;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    background: #fff;
+  }
+  .u-unit-badge{
+    min-width: 34px;
+    height: 30px;
+    border-radius: 999px;
+    display:grid;
+    place-items:center;
+    font-size: 13px;
+    color:#184f61;
+    background:#e9f3f6;
+    border: 1px solid #d7e9ee;
+    flex: 0 0 auto;
+  }
+  .u-unit-name{
+    font-size: 15px;
+    color:#0f172a;
+    min-width: 0;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ✅ footer hanya hint */
+  .u-modal-foot{
+    padding: 12px 16px;
+    border-top: 1px solid #e6eef2;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  .u-modal-hint{
+    font-size: 12px;
+    color:#94a3b8;
+  }
+
+  /* ✅ supaya muat 1 layar */
   .u-sum{ gap: 14px; }
   .u-sum-row{ gap: 14px; }
   .u-card{ padding: 14px 14px 12px; }
@@ -702,18 +862,24 @@ $unitKerja = [
   .u-canvas-wrap canvas{ max-height: 230px !important; }
 
   @media(max-width:1100px){
-    .u-sum-row--3{ grid-template-columns: 1fr; }
+    .u-sum-row--4{ grid-template-columns: 1fr; }
     .u-sum-row--2{ grid-template-columns: 1fr; }
     .u-charts{ grid-template-columns: 1fr; }
     .u-money, .u-value{ font-size: 28px; }
 
-    /* biar mini filter tetap enak di mobile */
     .u-card-filter{
       right: 10px;
       bottom: 10px;
     }
 
-    /* di layar kecil: tetap no-scroll page, tapi konten akan mengecil */
+    .u-modal-dialog{
+      width: calc(100vw - 26px);
+      height: 88vh;
+    }
+    .u-unit-grid{
+      grid-template-columns: 1fr;
+    }
+
     .u-canvas-wrap{ height: 220px; }
     .u-canvas-wrap canvas{ max-height: 220px !important; }
   }
@@ -721,25 +887,218 @@ $unitKerja = [
 
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-    // ✅ warna donut sesuai gambar (teal gelap, hitam, kuning, coklat muda)
     const donutColors = ['#0B4A5E', '#111827', '#F6C100', '#D6A357'];
 
-    // helper: biar label bar tidak miring + jadi atas-bawah kalau 2 kata
     const splitLabel = (value) => {
       if (Array.isArray(value)) return value;
       const s = String(value ?? '');
-      // utamakan \n yang sudah ada di data
       if (s.includes('\n')) return s.split('\n');
-      // kalau belum ada \n, pecah 2 kata jadi 2 baris
       const parts = s.trim().split(/\s+/);
       if (parts.length === 2) return [parts[0], parts[1]];
       return s;
     };
 
-    // Donut
+    // =========================
+    // ✅ POPOVER (CHART) + MODAL (UNIT)
+    // =========================
+    const closeAllPopovers = () => {
+      document.querySelectorAll('.u-popover.is-open').forEach(p => {
+        p.classList.remove('is-open');
+        p.setAttribute('aria-hidden', 'true');
+      });
+    };
+
+    document.addEventListener('click', function(e){
+      const isInside = e.target.closest('.u-chart-head');
+      if(!isInside) closeAllPopovers();
+    });
+
+    document.querySelectorAll('.u-info-btn[data-pop]').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        const id = btn.getAttribute('data-pop');
+        const pop = document.getElementById(id);
+        if(!pop) return;
+
+        const isOpen = pop.classList.contains('is-open');
+        closeAllPopovers();
+        if(!isOpen){
+          pop.classList.add('is-open');
+          pop.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    // ✅ modal open/close
+    const openModal = (id) => {
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('is-modal-open');
+    };
+    const closeModal = (id) => {
+      const modal = document.getElementById(id);
+      if(!modal) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('is-modal-open');
+    };
+
+    document.querySelectorAll('[data-modal]').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        closeAllPopovers();
+        openModal(btn.getAttribute('data-modal'));
+      });
+    });
+
+    document.querySelectorAll('[data-close]').forEach(el => {
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        const id = el.getAttribute('data-close');
+        closeModal(id);
+      });
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        const opened = document.querySelector('.u-modal.is-open');
+        if(opened){
+          closeModal(opened.id);
+        }else{
+          closeAllPopovers();
+        }
+      }
+    });
+
+    const fmtInt = (n) => {
+      const x = Number(n || 0);
+      return (isFinite(x) ? Math.round(x) : 0).toString();
+    };
+
+    const buildDetail = (chart, opts = {}) => {
+      if(!chart) return { meta:'—', rows: [] };
+      const labels = chart.data.labels || [];
+      const data = (chart.data.datasets && chart.data.datasets[0] && chart.data.datasets[0].data) ? chart.data.datasets[0].data : [];
+      const colors = (chart.data.datasets && chart.data.datasets[0] && chart.data.datasets[0].backgroundColor) ? chart.data.datasets[0].backgroundColor : [];
+      const total = data.reduce((a,b) => a + (Number(b)||0), 0) || 0;
+
+      const metaParts = [];
+      if(opts.tahun !== undefined && opts.tahun !== null) metaParts.push(`Tahun: ${opts.tahun || 'Semua'}`);
+      if(opts.unit !== undefined && opts.unit !== null) metaParts.push(`Unit: ${opts.unit || 'Semua Unit'}`);
+      metaParts.push(`Total: ${fmtInt(total)}`);
+
+      const rows = labels.map((name, i) => {
+        const val = Number(data[i] || 0);
+        const pct = total > 0 ? Math.round((val/total)*100) : 0;
+        return {
+          name: String(name),
+          val: `${fmtInt(val)} (${pct}%)`,
+          color: Array.isArray(colors) ? (colors[i] || '#184f61') : (colors || '#184f61')
+        };
+      });
+
+      rows.sort((a,b) => {
+        const av = parseInt((a.val || '0').replace(/[^0-9]/g,''), 10) || 0;
+        const bv = parseInt((b.val || '0').replace(/[^0-9]/g,''), 10) || 0;
+        return bv - av;
+      });
+
+      return { meta: metaParts.join(' • '), rows };
+    };
+
+    const renderDetailTo = (detail, metaEl, listEl) => {
+      if(metaEl) metaEl.textContent = detail.meta || '—';
+      if(!listEl) return;
+
+      listEl.innerHTML = '';
+      (detail.rows || []).forEach(r => {
+        const row = document.createElement('div');
+        row.className = 'u-popover-row';
+
+        const left = document.createElement('div');
+        left.className = 'u-popover-left';
+
+        const dot = document.createElement('span');
+        dot.className = 'u-dot';
+        dot.style.background = r.color || '#184f61';
+
+        const name = document.createElement('div');
+        name.className = 'u-popover-name';
+        name.textContent = r.name;
+
+        const val = document.createElement('div');
+        val.className = 'u-popover-val';
+        val.textContent = r.val;
+
+        left.appendChild(dot);
+        left.appendChild(name);
+        row.appendChild(left);
+        row.appendChild(val);
+        listEl.appendChild(row);
+      });
+    };
+
+    // =========================
+    // ✅ DUMMY scaling
+    // =========================
+    const hashKey = (s) => {
+      const str = String(s || '');
+      let h = 0;
+      for(let i=0;i<str.length;i++){
+        h = ((h<<5) - h) + str.charCodeAt(i);
+        h |= 0;
+      }
+      return Math.abs(h);
+    };
+
+    const makeScaled = (baseArr, keyStr) => {
+      const k = hashKey(keyStr);
+      const mul = 0.75 + ((k % 51) / 100);
+      return baseArr.map((v, i) => {
+        const wave = 0.92 + (((k + i*17) % 21) / 100);
+        const out = Math.max(0, Math.round(Number(v || 0) * mul * wave));
+        return out;
+      });
+    };
+
+    const parseRupiah = (txt) => {
+      const s = String(txt || '').replace(/[^0-9]/g,'');
+      const n = parseInt(s || '0', 10);
+      return isFinite(n) ? n : 0;
+    };
+
+    const formatRupiah = (n) => {
+      const x = Math.max(0, Math.round(Number(n || 0)));
+      const parts = x.toString().split('');
+      let out = '';
+      for(let i=0;i<parts.length;i++){
+        const idx = parts.length - i;
+        out += parts[i];
+        if(idx > 1 && idx % 3 === 1) out += '.';
+      }
+      return 'Rp ' + out;
+    };
+
+    const makeScaledSingle = (baseNumber, keyStr) => {
+      const k = hashKey(keyStr);
+      const mul = 0.75 + ((k % 51) / 100);
+      const wave = 0.90 + (((k + 17) % 23) / 100);
+      return Math.max(0, Math.round(Number(baseNumber || 0) * mul * wave));
+    };
+
+    // =========================
+    // CHART INSTANCES
+    // =========================
+    let donutChart = null;
+    let barChart = null;
+
     const donutCtx = document.getElementById('donutStatus');
     if(donutCtx){
-      new Chart(donutCtx, {
+      donutChart = new Chart(donutCtx, {
         type: 'doughnut',
         data: {
           labels: @json($statusLabels),
@@ -752,22 +1111,14 @@ $unitKerja = [
         options: {
           responsive: true,
           maintainAspectRatio: false,
-
-          // ✅ legend agak ke tengah (geser dari kanan)
-          layout: {
-            padding: {
-              right: 70   // makin kecil = makin ke tengah
-            }
-          },
-
+          layout: { padding: { right: 70 } },
           plugins: {
             legend: {
               position: 'right',
               labels: {
                 boxWidth: 10,
                 boxHeight: 10,
-                padding: 12, /* ✅ rapatin dikit */
-                /* ✅ normal */
+                padding: 12,
                 font: { family: 'Nunito', weight: '400', size: 14 }
               }
             },
@@ -778,10 +1129,9 @@ $unitKerja = [
       });
     }
 
-    // Bar (6 batang seperti gambar)
     const barCtx = document.getElementById('barStatus');
     if(barCtx){
-      new Chart(barCtx, {
+      barChart = new Chart(barCtx, {
         type: 'bar',
         data: {
           labels: @json($barLabels),
@@ -815,7 +1165,6 @@ $unitKerja = [
             },
             x: {
               ticks: {
-                // ✅ jangan miring, pecah jadi atas-bawah (multiline) biar tidak tabrakan
                 maxRotation: 0,
                 minRotation: 0,
                 autoSkip: false,
@@ -833,121 +1182,101 @@ $unitKerja = [
       });
     }
 
-    // (opsional) contoh listener kalau nanti mau dipakai untuk request backend
+    const metaDonut = document.getElementById('metaDonut');
+    const listDonut = document.getElementById('listDonut');
+    const metaBar   = document.getElementById('metaBar');
+    const listBar   = document.getElementById('listBar');
+
+    const refreshDonutDetail = () => {
+      const tahun = (document.getElementById('fTahun1')?.value || '');
+      const unit  = (document.getElementById('fUnit1')?.value || '');
+      const detail = buildDetail(donutChart, { tahun, unit });
+      renderDetailTo(detail, metaDonut, listDonut);
+    };
+
+    const refreshBarDetail = () => {
+      const tahun = (document.getElementById('fTahun2')?.value || '');
+      const unit  = (document.getElementById('fUnit2')?.value || '');
+      const detail = buildDetail(barChart, { tahun, unit });
+      renderDetailTo(detail, metaBar, listBar);
+    };
+
+    refreshDonutDetail();
+    refreshBarDetail();
+
+    const fTahun1 = document.getElementById('fTahun1');
+    const fUnit1  = document.getElementById('fUnit1');
+    const fTahun2 = document.getElementById('fTahun2');
+    const fUnit2  = document.getElementById('fUnit2');
+
+    const applyDonutFilter = () => {
+      if(!donutChart) return;
+      const tahun = (fTahun1?.value || '');
+      const unit  = (fUnit1?.value || '');
+      const key = `${tahun}__${unit}`;
+      const base = @json($statusValues);
+      donutChart.data.datasets[0].data = makeScaled(base, key);
+      donutChart.update();
+      refreshDonutDetail();
+    };
+
+    const applyBarFilter = () => {
+      if(!barChart) return;
+      const tahun = (fTahun2?.value || '');
+      const unit  = (fUnit2?.value || '');
+      const key = `${tahun}__${unit}`;
+      const base = @json($barValues);
+      const next = makeScaled(base, key).map(v => Math.min(100, v));
+      barChart.data.datasets[0].data = next;
+      barChart.data.datasets[0].label = tahun ? String(tahun) : 'Semua';
+      barChart.update();
+      refreshBarDetail();
+    };
+
+    if(fTahun1) fTahun1.addEventListener('change', applyDonutFilter);
+    if(fUnit1)  fUnit1.addEventListener('change', applyDonutFilter);
+    if(fTahun2) fTahun2.addEventListener('change', applyBarFilter);
+    if(fUnit2)  fUnit2.addEventListener('change', applyBarFilter);
+
     const fPaket = document.getElementById('fTahunPaket');
     const fNilai = document.getElementById('fTahunNilai');
-    if(fPaket){
-      fPaket.addEventListener('change', function(){
-        // nanti backend: fetch total paket berdasarkan tahun
-        // console.log('filter paket tahun:', this.value);
-      });
-    }
-    if(fNilai){
-      fNilai.addEventListener('change', function(){
-        // nanti backend: fetch total nilai berdasarkan tahun
-        // console.log('filter nilai tahun:', this.value);
-      });
-    }
+    const elPaket = document.getElementById('valPaket');
+    const elNilai = document.getElementById('valNilai');
+
+    const basePaket = Number(@json($summary[3]['value'])) || 0;
+    const baseNilai = parseRupiah(@json($summary[4]['value']));
+
+    const applyPaketByYear = () => {
+      if(!fPaket || !elPaket) return;
+      const tahun = String(fPaket.value || '');
+      const next = makeScaledSingle(basePaket, `paket__${tahun}`);
+      elPaket.textContent = fmtInt(next);
+    };
+
+    const applyNilaiByYear = () => {
+      if(!fNilai || !elNilai) return;
+      const tahun = String(fNilai.value || '');
+      const next = makeScaledSingle(baseNilai, `nilai__${tahun}`);
+      elNilai.textContent = formatRupiah(next);
+    };
+
+    if(fPaket) fPaket.addEventListener('change', applyPaketByYear);
+    if(fNilai) fNilai.addEventListener('change', applyNilaiByYear);
+
+    applyPaketByYear();
+    applyNilaiByYear();
+
+    const popDonut = document.getElementById('popDonut');
+    const popBar   = document.getElementById('popBar');
+
+    const observer = new MutationObserver(() => {
+      if(popDonut && popDonut.classList.contains('is-open')) refreshDonutDetail();
+      if(popBar && popBar.classList.contains('is-open')) refreshBarDetail();
+    });
+    if(popDonut) observer.observe(popDonut, { attributes:true, attributeFilter:['class'] });
+    if(popBar) observer.observe(popBar, { attributes:true, attributeFilter:['class'] });
   });
 </script>
 
 </body>
 </html>
-=======
-  </main>
-</div>
-@endsection
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // pastikan Chart.js kebaca
-  if (typeof Chart === 'undefined') {
-    console.error('Chart.js belum ke-load. Pastikan di layouts/ppk.blade.php ada <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> sebelum @stack("scripts")');
-    return;
-  }
-
-  const donutEl = document.getElementById('ppkDonut');
-  const barEl   = document.getElementById('ppkBar');
-
-  if (!donutEl || !barEl) {
-    console.error('Canvas ppkDonut / ppkBar tidak ditemukan');
-    return;
-  }
-
-  const labels = ['Perencanaan','Pemilihan','Pelaksanaan','Selesai'];
-  const colors = ['#1f4e63', '#111827', '#f6c100', '#e3bd74'];
-
-  // DONUT
-  const donutChart = new Chart(donutEl, {
-    type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{
-        data: [25, 15, 40, 20],
-        backgroundColor: colors,
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '62%',
-      plugins: { legend: { display: false } }
-    }
-  });
-
-  // BAR
-  const barChart = new Chart(barEl, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: '2020',
-        data: [30, 50, 90, 35],
-        backgroundColor: colors,
-        borderRadius: 8,
-        barPercentage: .6,
-        categoryPercentage: .7
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: true, position: 'bottom' }
-      },
-      scales: {
-        y: { beginAtZero: true, ticks: { stepSize: 20 } },
-        x: { grid: { display: false } }
-      }
-    }
-  });
-
-  // interaksi dropdown (dummy)
-  function rand4(){
-    return [
-      Math.floor(Math.random()*100)+1,
-      Math.floor(Math.random()*100)+1,
-      Math.floor(Math.random()*100)+1,
-      Math.floor(Math.random()*100)+1
-    ];
-  }
-
-  function refresh(){
-    donutChart.data.datasets[0].data = rand4();
-    donutChart.update();
-
-    barChart.data.datasets[0].data = rand4();
-    barChart.data.datasets[0].label = document.getElementById('ppkYearBar')?.value || '2020';
-    barChart.update();
-  }
-
-  ['ppkYearDonut','ppkUnitDonut','ppkYearBar','ppkUnitBar'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('change', refresh);
-  });
-});
-</script>
-@endpush
->>>>>>> Stashed changes

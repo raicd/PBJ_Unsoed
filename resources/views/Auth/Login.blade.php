@@ -12,10 +12,10 @@
 <section class="login-figma">
   <div class="login-figma-bg">
 
-    {{-- Banner error (frontend only) --}}
-    @if($showError)
+    {{-- Banner error --}}
+    @if($showError || session('error'))
       <div class="login-error">
-        Username atau Password Salah!
+        {{ session('error') ?? 'Username atau Password Salah!' }}
       </div>
     @endif
 
@@ -26,8 +26,9 @@
         Silakan masukkan email dan kata sandi Anda untuk melanjutkan.
       </p>
 
-      {{-- FRONTEND ONLY: jangan POST ke server --}}
-      <form class="login-figma-form" id="loginForm" action="javascript:void(0)" method="GET">
+      {{-- ✅ REAL LOGIN: POST ke server --}}
+      <form class="login-figma-form" id="loginForm" action="{{ route('login.post', ['role' => $role]) }}" method="POST">
+        @csrf
         <input type="hidden" name="role" value="{{ $role }}">
 
         <div class="fg">
@@ -38,6 +39,7 @@
             name="email"
             placeholder="esteban.schiller@gmail.com"
             autocomplete="email"
+            value="{{ old('email') }}"
             required
           >
         </div>
@@ -68,42 +70,4 @@
     </div>
   </div>
 </section>
-
-{{-- Simulasi login FRONTEND --}}
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('loginForm');
-  const emailEl = document.getElementById('email');
-  const passEl  = document.getElementById('password');
-
-  if(!form) return;
-
-  const dummy = {
-  ppk:  { email: 'ppk@unsoed.ac.id',  pass: '123456', redirect: '/home' },
-  unit: { email: 'unit@unsoed.ac.id', pass: '123456', redirect: '/home' }
-};
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const role = new URLSearchParams(window.location.search).get('role') || 'ppk';
-    const inputEmail = (emailEl.value || '').trim().toLowerCase();
-    const inputPass  = (passEl.value || '').trim();
-
-    const akun = dummy[role] || dummy.ppk;
-
-    // kalau cocok -> redirect dashboard
-    if (inputEmail === akun.email && inputPass === akun.pass) {
-      window.location.href = akun.redirect;
-      return;
-    }
-
-    // kalau gagal -> reload halaman login dengan ?error=1
-    const url = new URL(window.location.href);
-    url.searchParams.set('role', role);
-    url.searchParams.set('error', '1');
-    window.location.href = url.toString();
-  });
-});
-</script>
 @endsection
